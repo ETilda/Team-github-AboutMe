@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "df2b4871-2fbb-4dab-b0bf-96f7fc8269c6",
+		"_postman_id": "124e1803-9920-49b4-8068-d81de8aa81fe",
 		"name": "APICollection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -149,43 +149,27 @@
 			"name": "Get Books",
 			"item": [
 				{
-					"name": "Get Books - valid book type",
+					"name": "Get Books - valid book",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"const response = pm.response.json();\r",
-									"// print any kind of variables/message on the screen\r",
-									"console.log(response[2].name);\r",
-									"pm.test(\"Search for a book name called Viscount Who Loved Me\", function (){\r",
-									"    pm.expect(response[3].name).to.eql(\"Viscount Who Loved Me\")\r",
-									"});\r",
-									"\r",
-									"/*const Fiction = response.filter((book) => book.type === \"fiction\");\r",
-									"console.log(Fiction)\r",
-									"//Print out the id of a fiction book that is available called \"The Midnight Library\"*/\r",
-									"\r",
-									"const Fiction = response.filter((book) => book.type === \"fiction\" && book.available === true && book.name === \"Viscount Who Loved Me\")\r",
-									"\r",
-									"console.log(Fiction[0].id);\r",
-									"\r",
-									"pm.test(\"The id number of a fiction book that available with the name The Midnight Library is \" , function () {\r",
-									"    pm.expect(Fiction[0].name).eql(\"Viscount Who Loved Me\")\r",
-									"});\r",
-									"\r",
-									"pm.globals.set(\"bookId\", Fiction[0].id);\r",
+									"//\r",
+									"console.log(response[1].id);\r",
+									"pm.environment.set(\"The Vanishing Half\", response[1].id);\r",
 									"\r",
 									"\r",
 									"\r",
 									"\r",
 									"\r",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -193,12 +177,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://simple-books-api.glitch.me/books?type=fiction",
-							"protocol": "https",
+							"raw": "{{baseUrlBook}}/books?type=fiction",
 							"host": [
-								"simple-books-api",
-								"glitch",
-								"me"
+								"{{baseUrlBook}}"
 							],
 							"path": [
 								"books"
@@ -219,23 +200,17 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"const response = pm.response.json();\r",
-									"// print any kind of variables/message on the screen\r",
+									"\r",
 									"console.log(response[2].name);\r",
 									"pm.test(\"Search for a book name called Viscount Who Loved Me\", function (){\r",
 									"    pm.expect(response[3].name).to.eql(\"Viscount Who Loved Me\")\r",
 									"});\r",
 									"\r",
-									"/*const Fiction = response.filter((book) => book.type === \"fiction\");\r",
-									"console.log(Fiction)\r",
-									"//Print out the id of a fiction book that is available called \"The Midnight Library\"*/\r",
-									"\r",
-									"const Fiction = response.filter((book) => book.type === \"fiction\" && book.available === true && book.name === \"Viscount Who Loved Me\")\r",
 									"\r",
 									"console.log(Fiction[0].id);\r",
 									"\r",
@@ -243,14 +218,15 @@
 									"    pm.expect(Fiction[0].name).eql(\"Viscount Who Loved Me\")\r",
 									"});\r",
 									"\r",
-									"pm.globals.set(\"bookId\", Fiction[0].id);\r",
+									"pm.environment.set(\"bookId\", Fiction[0].id);\r",
 									"\r",
 									"\r",
 									"\r",
 									"\r",
 									"\r",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -258,21 +234,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://simple-books-api.glitch.me/books?type=romance",
-							"protocol": "https",
+							"raw": "{{baseUrlBook}}",
 							"host": [
-								"simple-books-api",
-								"glitch",
-								"me"
-							],
-							"path": [
-								"books"
-							],
-							"query": [
-								{
-									"key": "type",
-									"value": "romance"
-								}
+								"{{baseUrlBook}}"
 							]
 						}
 					},
@@ -289,14 +253,14 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
-									"const OrderId = pm.response.json();\r",
+									"const OrderID = pm.response.json();\r",
 									"\r",
-									"console.log(OrderId.orderId);\r",
-									"pm.globals.set(\"OrderId\", OrderId.orderId);\r",
+									"console.log(OrderID.orderId);\r",
+									"pm.environment.set(\"OrderId\", OrderID.orderId);\r",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -315,7 +279,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"bookId\": 1,\n  \"customerName\": \"John\"\n}",
+							"raw": "{\n  \"bookId\":{{The Vanishing Half}},\n  \"customerName\": \"Janelle\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -323,12 +287,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://simple-books-api.glitch.me/orders",
-							"protocol": "https",
+							"raw": "{{baseUrlBook}}/orders",
 							"host": [
-								"simple-books-api",
-								"glitch",
-								"me"
+								"{{baseUrlBook}}"
 							],
 							"path": [
 								"orders"
@@ -343,14 +304,14 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const OrderId = pm.response.json();\r",
 									"\r",
 									"console.log(OrderId.orderId);\r",
 									"pm.globals.set(\"OrderId\", OrderId.orderId);\r",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -377,12 +338,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://simple-books-api.glitch.me/orders",
-							"protocol": "https",
+							"raw": "{{baseUrlBook}}/orders",
 							"host": [
-								"simple-books-api",
-								"glitch",
-								"me"
+								"{{baseUrlBook}}"
 							],
 							"path": [
 								"orders"
@@ -397,14 +355,14 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const OrderId = pm.response.json();\r",
 									"\r",
 									"console.log(OrderId.orderId);\r",
 									"pm.globals.set(\"OrderId\", OrderId.orderId);\r",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -431,12 +389,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://simple-books-api.glitch.me/orders",
-							"protocol": "https",
+							"raw": "{{baseUrlBook}}/orders",
 							"host": [
-								"simple-books-api",
-								"glitch",
-								"me"
+								"{{baseUrlBook}}"
 							],
 							"path": [
 								"orders"
@@ -489,12 +444,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://simple-books-api.glitch.me/orders",
-							"protocol": "https",
+							"raw": "{{baseUrlBook}}/orders",
 							"host": [
-								"simple-books-api",
-								"glitch",
-								"me"
+								"{{baseUrlBook}}"
 							],
 							"path": [
 								"orders"
@@ -536,12 +488,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://simple-books-api.glitch.me/orders/:orderId",
-							"protocol": "https",
+							"raw": "{{baseUrlBook}}/orders/:orderId",
 							"host": [
-								"simple-books-api",
-								"glitch",
-								"me"
+								"{{baseUrlBook}}"
 							],
 							"path": [
 								"orders",
@@ -550,7 +499,7 @@
 							"variable": [
 								{
 									"key": "orderId",
-									"value": "1B2MxfZFLWpatDgkkN6l3"
+									"value": "{{OrderId}}"
 								}
 							]
 						}
@@ -585,12 +534,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://simple-books-api.glitch.me/orders/:orderId",
-							"protocol": "https",
+							"raw": "{{baseUrlBook}}/orders/:orderId",
 							"host": [
-								"simple-books-api",
-								"glitch",
-								"me"
+								"{{baseUrlBook}}"
 							],
 							"path": [
 								"orders",
@@ -634,12 +580,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://simple-books-api.glitch.me/orders/:orderId",
-							"protocol": "https",
+							"raw": "{{baseUrlBook}}/orders/:orderId",
 							"host": [
-								"simple-books-api",
-								"glitch",
-								"me"
+								"{{baseUrlBook}}"
 							],
 							"path": [
 								"orders",
@@ -666,16 +609,16 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 204\", function () {\r",
-									"    pm.response.to.have.status(204);\r",
+									"    pm.response.to.have.status(404);\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Status code name has string OK\", function () {\r",
-									"    pm.response.to.have.status(\"No Content\");\r",
+									"pm.test(\"Status response should be 404 Not Found\", function () {\r",
+									"    pm.response.to.have.status(\"Not Found\");\r",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -702,12 +645,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://simple-books-api.glitch.me/orders/:orderId",
-							"protocol": "https",
+							"raw": "{{baseUrlBook}}/orders/:orderId",
 							"host": [
-								"simple-books-api",
-								"glitch",
-								"me"
+								"{{baseUrlBook}}"
 							],
 							"path": [
 								"orders",
@@ -716,7 +656,7 @@
 							"variable": [
 								{
 									"key": "orderId",
-									"value": "bl8ZbxUCq59bH8DyYWvjo"
+									"value": "{{OrderId}}"
 								}
 							]
 						}
@@ -729,16 +669,16 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 204\", function () {\r",
-									"    pm.response.to.have.status(204);\r",
+									"    pm.response.to.have.status(404);\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Status code name has string OK\", function () {\r",
-									"    pm.response.to.have.status(\"No Content\");\r",
+									"pm.test(\"Status Response to have 404 Not found\", function () {\r",
+									"    pm.response.to.have.status(\"Not Found\");\r",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -765,12 +705,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://simple-books-api.glitch.me/orders/:orderId",
-							"protocol": "https",
+							"raw": "{{baseUrlBook}}/orders/:orderId",
 							"host": [
-								"simple-books-api",
-								"glitch",
-								"me"
+								"{{baseUrlBook}}"
 							],
 							"path": [
 								"orders",
@@ -792,16 +729,16 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 204\", function () {\r",
-									"    pm.response.to.have.status(204);\r",
+									"    pm.response.to.have.status(404);\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Status code name has string OK\", function () {\r",
-									"    pm.response.to.have.status(\"No Content\");\r",
+									"pm.test(\"Status response should have 404 Not Found\", function () {\r",
+									"    pm.response.to.have.status(\"Not Found\");\r",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -828,12 +765,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://simple-books-api.glitch.me/orders/:orderId",
-							"protocol": "https",
+							"raw": "{{baseUrlBook}}/orders/:orderId",
 							"host": [
-								"simple-books-api",
-								"glitch",
-								"me"
+								"{{baseUrlBook}}"
 							],
 							"path": [
 								"orders",
