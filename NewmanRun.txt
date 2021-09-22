@@ -1,0 +1,156 @@
+
+C:\Users\user\Downloads\APITESTRUN>ma
+'ma' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\user\Downloads\APITESTRUN>
+C:\Users\user\Downloads\APITESTRUN>dir
+ Volume in drive C is Windows
+ Volume Serial Number is FC00-3AA7
+
+ Directory of C:\Users\user\Downloads\APITESTRUN
+
+09/17/2021  01:49 PM    <DIR>          .
+09/17/2021  01:49 PM    <DIR>          ..
+09/17/2021  01:49 PM            16,524 APICollection.postman_collection.json
+09/17/2021  01:49 PM               471 NModule.postman_environment.json
+               2 File(s)         16,995 bytes
+               2 Dir(s)  166,660,632,576 bytes free
+
+C:\Users\user\Downloads\APITESTRUN>newman run APICollection.postman_collection.json -e NModule.postman_environment.json
+newman
+
+APICollection
+
+□ Get All Todo Entries
+└ Get All Todo Entries
+  GET https://demo.fusio-project.org/index.php/todo [200 OK, 2.79kB, 1575ms]
+  √  Status code Should be 200
+  √  Status code name should have an OK string
+
+□ Get All Entries
+└ Get All Entries
+  GET https://demo.fusio-project.org/index.php/ [200 OK, 2.01kB, 192ms]
+
+□ Get entry per ID
+└ Get entry per ID - Valid ID
+  GET https://demo.fusio-project.org/index.php/todo/?todo_id=2 [200 OK, 2.79kB, 175ms]
+
+└ Get entry per ID - Invalid ID(params not using TODO ID)
+  GET https://demo.fusio-project.org/index.php/todo/?todo_id=2 [200 OK, 2.79kB, 171ms]
+
+□ Get Books
+└ Get Books - valid book
+  GET https://simple-books-api.glitch.me/books?type=fiction [200 OK, 497B, 1091ms]
+  √  Status code is 200
+  ┌
+  │ 3
+  └
+
+└ Get Books - invalid book type
+  GET https://simple-books-api.glitch.me [200 OK, 258B, 868ms]
+  √  Status code is 200
+  1⠄ TypeError in test-script
+
+□ Place a book order
+└ Place a book order - using valid book ID
+  POST https://simple-books-api.glitch.me/orders [201 Created, 267B, 1464ms]
+  ┌
+  │ 'MsOVdVfmxdz_6-FndNC-U'
+  └
+
+└ Place a book order - using invalid book ID
+  POST https://simple-books-api.glitch.me/orders [400 Bad Request, 259B, 851ms]
+  ┌
+  │ undefined
+  └
+
+└ Place a book order - using no book ID
+  POST https://simple-books-api.glitch.me/orders [422 Unprocessable Entity, 339B, 277ms]
+  2⠄ JSONError in test-script
+
+□ Get all orders
+└ Get all orders
+  GET https://simple-books-api.glitch.me/orders [200 OK, 36.9kB, 1529ms]
+
+□ Get an order
+└ Get an order - using a valid order number
+  GET https://simple-books-api.glitch.me/orders/MsOVdVfmxdz_6-FndNC-U [200 OK, 366B, 254ms]
+
+└ Get an order - using an invalid order number
+  GET https://simple-books-api.glitch.me/orders/adeyi [404 Not Found, 249B, 687ms]
+
+└ Get an order - using no order ID
+  GET https://simple-books-api.glitch.me/orders/ [200 OK, 36.9kB, 1005ms]
+
+□ Delete an order
+└ Delete an order - using valid order ID
+  DELETE https://simple-books-api.glitch.me/orders/MsOVdVfmxdz_6-FndNC-U [204 No Content, 111B, 1380ms]
+  3. Status code is 204
+  4. Status response should be 404 Not Found
+
+└ Delete an order - using invalid order ID
+  DELETE https://simple-books-api.glitch.me/orders/adeyi [404 Not Found, 254B, 614ms]
+  √  Status code is 204
+  √  Status Response to have 404 Not found
+
+└ Delete an order - using no order ID
+  DELETE https://simple-books-api.glitch.me/orders/ [404 Not Found, 398B, 239ms]
+  √  Status code is 204
+  √  Status response should have 404 Not Found
+
+┌─────────────────────────┬─────────────────────┬─────────────────────┐
+│                         │            executed │              failed │
+├─────────────────────────┼─────────────────────┼─────────────────────┤
+│              iterations │                   1 │                   0 │
+├─────────────────────────┼─────────────────────┼─────────────────────┤
+│                requests │                  16 │                   0 │
+├─────────────────────────┼─────────────────────┼─────────────────────┤
+│            test-scripts │                  10 │                   2 │
+├─────────────────────────┼─────────────────────┼─────────────────────┤
+│      prerequest-scripts │                   0 │                   0 │
+├─────────────────────────┼─────────────────────┼─────────────────────┤
+│              assertions │                  10 │                   2 │
+├─────────────────────────┴─────────────────────┴─────────────────────┤
+│ total run duration: 13.8s                                           │
+├─────────────────────────────────────────────────────────────────────┤
+│ total data received: 83.31kB (approx)                               │
+├─────────────────────────────────────────────────────────────────────┤
+│ average response time: 773ms [min: 171ms, max: 1575ms, s.d.: 507ms] │
+└─────────────────────────────────────────────────────────────────────┘
+
+  #  failure                          detail
+
+ 1.  TypeError                        Cannot read property 'name' of undefined
+                                      at test-script
+                                      inside "Get Books / Get Books - invalid book type"
+
+ 2.  JSONError                        Unexpected token 'U' at 1:1
+                                      Unprocessable Entity
+                                      ^
+                                      at test-script
+                                      inside "Place a book order / Place a book order - using no book ID"
+
+ 3.  AssertionError                   Status code is 204
+                                      expected response to have status code 404 but got 204
+                                      at assertion:0 in test-script
+                                      inside "Delete an order / Delete an order - using valid order ID"
+
+ 4.  AssertionError                   Status response should be 404 Not Found
+                                      expected response to have status reason 'Not Found' but got 'No Content'
+                                      at assertion:1 in test-script
+                                      inside "Delete an order / Delete an order - using valid order ID"
+
+C:\Users\user\Downloads\APITESTRUN>git add .
+fatal: not a git repository (or any of the parent directories): .git
+
+C:\Users\user\Downloads\APITESTRUN>git status
+fatal: not a git repository (or any of the parent directories): .git
+
+C:\Users\user\Downloads\APITESTRUN>git add .
+fatal: not a git repository (or any of the parent directories): .git
+
+C:\Users\user\Downloads\APITESTRUN>git add .
+fatal: not a git repository (or any of the parent directories): .git
+
+C:\Users\user\Downloads\APITESTRUN>NModule.postman_environmentNModule.postman_environmentNModule.postman_environment
